@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Naman's Love Quest ❤️</title>
+    <style>
+        :root {
+            --primary-pink: #ff85a1;
+            --soft-bg: #fff0f3;
+            --error-red: #ff4d4d;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background-color: var(--soft-bg);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        .section {
+            display: none;
+            text-align: center;
+            background: white;
+            padding: 2.5rem;
+            border-radius: 30px;
+            box-shadow: 0 15px 35px rgba(255, 133, 161, 0.2);
+            width: 90%;
+            max-width: 450px;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .gif { width: 180px; height: 180px; object-fit: contain; margin-bottom: 20px; border-radius: 20px; }
+        
+        button {
+            background: var(--primary-pink);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            margin: 10px;
+            transition: 0.3s;
+            width: 80%;
+        }
+
+        button:hover { transform: scale(1.05); }
+
+        .hint-text { color: var(--error-red); font-weight: bold; min-height: 24px; margin-top: 10px; }
+
+        #noBtn { background: #adb5bd; width: auto; position: relative; }
+        #yesBtn { background: #ff4d6d; width: auto; padding: 15px 40px; font-weight: bold; }
+        #shristiBtn { background: #ff4d6d; font-weight: bold; }
+        #namanBtn { position: absolute; width: auto; }
+    </style>
+</head>
+<body>
+
+    <div id="step1" class="section active">
+        <img src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExaHZuamx5M3B4djBrOXJsMzdybWlwNmx3b2VjdzFwcHpzaXV3NHYwZSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/mBGcf7ReM5FHVCSyHT/giphy.gif" class="gif">
+        <h1>For Naman's Eyes Only</h1>
+        <p>I have a very important mission for you...</p>
+        <button onclick="nextStep(2)">Accept Mission 🫡</button>
+    </div>
+
+    <div id="step2" class="section">
+        <img id="quizGif" src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExZDBybXg3NHFtODBzc3AxMnBpeTJmOGEydW44eXFqdzVoZ2ppM3g0aiZlcD12MV9naWZzX3NlYXJjaCZjdD1n/8Fd3ctn2faAwg/giphy.gif" class="gif">
+        <h2 id="questionTitle">Question 1</h2>
+        <p id="questionText">Where was our first date?</p>
+        
+        <div id="optionsContainer">
+            <button onclick="checkAnswer(true)">Babylon Cafe</button>
+            <button onclick="checkAnswer(false)">Serra Cafe</button>
+        </div>
+        <p id="feedback" class="hint-text"></p>
+    </div>
+
+    <div id="step3" class="section">
+        <img id="finalGif" src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExN2U2M29kYzQ2bDQzM2VzMDNvMXNxYXIyM3hxZWlkeXB0MHVscXIycyZlcD12MV9naWZzX3NlYXJjaCZjdD1n/7zGmpJmwUp5lNFudOf/giphy.gif" class="gif">
+        <h1>Final Step...</h1>
+        <p>Naman, will you be my Valentine?</p>
+        <div style="display: flex; justify-content: center; align-items: center; gap: 10px; flex-wrap: wrap;">
+            <button id="yesBtn" onclick="nextStep(4)">YES! ❤️</button>
+            <button id="noBtn" onclick="guiltTrip()">No</button>
+        </div>
+        <p id="guiltText" class="hint-text"></p>
+    </div>
+
+    <div id="step4" class="section">
+        <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbjJ6MnQ1d3RzZGhvamwyY3p4c20ydTEzeHczYmptYXJyazZiNms0YSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/OvpA7YvA9INE7bgGOy/giphy.gif" class="gif">
+        <h1>VICTORY! 🏆</h1>
+        <p>You passed the test, Babyyyyy! I love you so much!</p>
+        <div style="background: #fff0f3; padding: 20px; border-radius: 15px; border: 2px dashed #ff85a1;">
+            <h3 style="margin: 0; color: #ff4d6d;">REDEEMABLE COUPON</h3>
+            <p style="font-size: 1.2rem;">"Unlimited kisses and hugs"</p>
+        </div>
+    </div>
+
+    <script>
+        let currentQuestion = 1;
+        let guiltIndex = 0;
+        const guiltMessages = [
+            "Try again! 🙄",
+            "No baby, wrong one! ❌",
+            "Haww you don't love me? 🥺",
+            "Think about this again... 🤨",
+            "Are you sure? 😭",
+            "My heart is breaking! 💔",
+            "I'm gonna tell your mom! 😤",
+            "Just click Yes already! 💖",
+            "Babyyyyyy😭",
+            "Bas karo ab🥺",
+            "Maar khaega😤"
+        ];
+
+        function nextStep(step) {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.getElementById('step' + step).classList.add('active');
+        }
+
+        function guiltTrip() {
+            const text = document.getElementById('guiltText');
+            const noBtn = document.getElementById('noBtn');
+            const yesBtn = document.getElementById('yesBtn');
+            const gif = document.getElementById('finalGif');
+            
+            text.innerText = guiltMessages[guiltIndex];
+            guiltIndex = (guiltIndex + 1) % guiltMessages.length;
+            
+            // Make the Yes button grow every time he says no!
+            let currentSize = parseFloat(window.getComputedStyle(yesBtn).fontSize);
+            yesBtn.style.fontSize = (currentSize + 2) + "px";
+            yesBtn.style.padding = (currentSize + 5) + "px " + (currentSize + 20) + "px";
+            
+            // Change GIF to a sad one
+            gif.src = "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExa2JvYWY1aGRncTBrMWx6b2VubzM4YzI0aDZ6eWZmdWt5MHQxYjFwdyZlcD12MV9naWZzX3NlYXJjaCZjdD1n/NTY1kHmcLsCsg/giphy.gif";
+        }
+
+        function checkAnswer(isCorrect) {
+            const feedback = document.getElementById('feedback');
+            const gif = document.getElementById('quizGif');
+
+            if (currentQuestion === 1) {
+                if (isCorrect) {
+                    currentQuestion = 2;
+                    feedback.innerText = "";
+                    updateToQuestion2();
+                } else {
+                    feedback.innerText = "WRONG!Tum yeh kaise bhul gaya baby? 😠";
+                    gif.src = "https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3Y3Z4M2t6dmIzOWh0MWhoc2w4b28wM3Bjb284dmJibnFrd3NwN3NnMiZlcD12MV9naWZzX3NlYXJjaCZjdD1n/yhvLoKSMv4PgiZ5FAj/giphy.gif"; 
+                }
+            } else if (currentQuestion === 2) {
+                if (isCorrect) {
+                    currentQuestion = 3;
+                    feedback.innerText = "";
+                    updateToQuestion3();
+                } else {
+                    feedback.innerText = "Nope! jao katti 🙄";
+                    gif.src = "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExejNidnJvOHAxeWRpcHJqdmVkaTNpb2NlMGtvbGhjbXNyNmNtMHB5YyZlcD12MV9naWZzX3NlYXJjaCZjdD1n/qUXaSnnyoLexdTtYqp/giphy.gif";
+                }
+            }
+        }
+
+        function updateToQuestion2() {
+            document.getElementById('questionTitle').innerText = "Question 2";
+            document.getElementById('questionText').innerText = "What was I wearing on our first date?";
+            document.getElementById('quizGif').src = "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExejNidnJvOHAxeWRpcHJqdmVkaTNpb2NlMGtvbGhjbXNyNmNtMHB5YyZlcD12MV9naWZzX3NlYXJjaCZjdD1n/fjNO16dRtOMvgSHTKz/giphy.gif";
+            const container = document.getElementById('optionsContainer');
+            container.innerHTML = `
+                <button onclick="checkAnswer(true)">Black top</button>
+                <button onclick="checkAnswer(false)">Pink top</button>
+            `;
+        }
+
+        function updateToQuestion3() {
+            document.getElementById('questionTitle').innerText = "Question 3";
+            document.getElementById('questionText').innerText = "Who loves more?";
+            document.getElementById('quizGif').src = "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExZDBybXg3NHFtODBzc3AxMnBpeTJmOGEydW44eXFqdzVoZ2ppM3g0aiZlcD12MV9naWZzX3NlYXJjaCZjdD1n/AQ7GWTm9iBxaU/giphy.gif";
+            const container = document.getElementById('optionsContainer');
+            container.innerHTML = `
+                <button id="shristiBtn" onclick="nextStep(3)">Shristi</button>
+                <button id="namanBtn" onmouseover="moveNaman()">Naman</button>
+            `;
+        }
+
+        function moveNaman() {
+            const btn = document.getElementById('namanBtn');
+            const x = Math.random() * (window.innerWidth - 100);
+            const y = Math.random() * (window.innerHeight - 50);
+            btn.style.left = x + 'px';
+            btn.style.top = y + 'px';
+        }
+    </script>
+</body>
+</html>
